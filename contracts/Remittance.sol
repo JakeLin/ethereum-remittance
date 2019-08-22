@@ -13,7 +13,7 @@ contract Remittance is Pausable {
   constructor(bool paused) Pausable(paused) public {
   }
 
-  function calcuateHash(address _carol, bytes32 _bobPassword, bytes32 _carolPassword) public view returns(bytes32) {
+  function generateHash(address _carol, bytes32 _bobPassword, bytes32 _carolPassword) public view returns(bytes32) {
      return keccak256(abi.encodePacked(this, _carol, _bobPassword, _carolPassword));
   }
 
@@ -30,7 +30,7 @@ contract Remittance is Pausable {
     uint256 contractBalance = address(this).balance;
     require(contractBalance > 0, "Can't withdraw since the contract balance is zero!");
 
-    bytes32 hashValue = calcuateHash(msg.sender, _bobPassword, _carolPassword);
+    bytes32 hashValue = generateHash(msg.sender, _bobPassword, _carolPassword);
     require(hashValue == withdrawHash, "Can't withdraw when the passwords are wrong!");
     emit LogWithdrawn(msg.sender, contractBalance);
     msg.sender.transfer(contractBalance);

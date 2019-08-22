@@ -32,7 +32,7 @@ contract('Remittance', accounts => {
     let hash;
     beforeEach(async () => {
       // Arrange
-      hash = await remittance.methods.calcuateHash(carol, bobCorrectPassword, carolCorrectPassword).call();
+      hash = await remittance.methods.generateHash(carol, bobCorrectPassword, carolCorrectPassword).call();
     });
 
     context('when Carol address is a zero address', () => {
@@ -95,7 +95,7 @@ contract('Remittance', accounts => {
   context('withdraw()', async () => {
     beforeEach(async () => {
       // Arrange
-      const hash = await remittance.methods.calcuateHash(carol, bobCorrectPassword, carolCorrectPassword).call();
+      const hash = await remittance.methods.generateHash(carol, bobCorrectPassword, carolCorrectPassword).call();
       remittance.methods.deposit(hash, carol).send({from: owner, value: toWei('2', 'ether')});
     });
 
