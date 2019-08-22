@@ -3,7 +3,6 @@ pragma solidity >=0.4.21 <0.6.0;
 import "./Pausable.sol";
 
 contract Remittance is Pausable {
-  address public owner;
   address public carol;
   bytes32 private withdrawHash;
 
