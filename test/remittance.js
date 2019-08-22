@@ -15,7 +15,7 @@ contract('Remittance', accounts => {
   const bobWrongPassword = fromAscii('bob-wrong-password');
   const carolWrongPassword = fromAscii('carol-wrong-password');
 
-  beforeEach(async () => {
+  beforeEach('creating new instance', async () => {
     contract = (await Remittance.new(false, { from: owner, gas: 3000000 })).contract;
   });
 
