@@ -55,6 +55,16 @@ contract('Remittance', accounts => {
       });
     });
 
+    context('when not owner deposits', () => {
+      it('should fail', async () => {
+        // Act & Assert
+        await truffleAssert.reverts(
+          contract.methods.deposit(hash, carol).send({from: someoneElse, value: 2}),
+          'Only owner can do this!'
+        );
+      });
+    });
+
     context('when deposit more than zero ether', () => {
       beforeEach(async () => {
         // Act

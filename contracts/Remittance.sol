@@ -1,6 +1,7 @@
 pragma solidity >=0.4.21 <0.6.0;
 
 import "./Pausable.sol";
+import "./Ownable.sol";
 
 contract Remittance is Pausable {
   address public carol;
@@ -16,7 +17,7 @@ contract Remittance is Pausable {
      return keccak256(abi.encodePacked(this, _carol, _bobPassword, _carolPassword));
   }
 
-  function deposit(bytes32 _hash, address _carol) external payable whenRunning whenAlive {
+  function deposit(bytes32 _hash, address _carol) external payable onlyOwner whenRunning whenAlive {
     require(_carol != address(0), "Carol's address must not be zero!");
     require(msg.value > 0, "The value of deposit must be more than zero ether!");
     carol = _carol;
