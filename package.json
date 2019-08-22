@@ -1,0 +1,24 @@
+{
+  "name": "remittance",
+  "version": "1.0.0",
+  "description": "Remittance contract on Ethereum",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Ethereum",
+    "Solidity"
+  ],
+  "author": "Jake Lin",
+  "license": "MIT",
+  "dependencies": {
+    "truffle-hdwallet-provider": "^1.0.16"
+  },
+  "devDependencies": {
+    "truffle-assertions": "^0.9.1"
+  }
+}
