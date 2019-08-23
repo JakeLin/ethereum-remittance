@@ -21,7 +21,7 @@ contract('Remittance', accounts => {
 
   context('constructor()', () => {
     it('should deploy the remittance correctly', async () => {
-      assert.ok(remittance);
+      assert.ok((await web3.eth.getTransaction(remittance.transactionHash)).blockNumber);
       assert.strictEqual(await remittance.methods.getOwner().call(), owner);
       assert.strictEqual(await remittance.methods.isPaused().call(), false);
     });
