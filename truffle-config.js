@@ -27,7 +27,7 @@ const getProvider = (networkId) => {
   if (networkId === 3) {
     return new HDWalletProvider(mnemonic, `https://ropsten.infura.io/v3/${infuraKey}`);
   }
-  return null;
+  throw(`Unsupported network id: ${networkId}`);
 };
 
 module.exports = {
