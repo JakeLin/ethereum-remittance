@@ -104,7 +104,7 @@ contract('Remittance', accounts => {
         // Act & Assert
         await truffleAssert.reverts(
           remittance.methods.withdraw(bobCorrectPassword, carolCorrectPassword).send({from: someoneElse}),
-          'Only Carol can withdraw!'
+          'Can\'t withdraw when the information is wrong, please check the passwords and only Carol can withdraw.'
         );
       });
     });
@@ -129,17 +129,17 @@ contract('Remittance', accounts => {
         // Act & Assert
         await truffleAssert.reverts(
           remittance.methods.withdraw(bobCorrectPassword, carolWrongPassword).send({from: carol}),
-          'Can\'t withdraw when the passwords are wrong!'
+          'Can\'t withdraw when the information is wrong, please check the passwords and only Carol can withdraw.'
         );
 
         await truffleAssert.reverts(
           remittance.methods.withdraw(bobWrongPassword, carolCorrectPassword).send({from: carol}),
-          'Can\'t withdraw when the passwords are wrong!'
+          'Can\'t withdraw when the information is wrong, please check the passwords and only Carol can withdraw.'
         );
 
         await truffleAssert.reverts(
           remittance.methods.withdraw(bobWrongPassword, carolWrongPassword).send({from: carol}),
-          'Can\'t withdraw when the passwords are wrong!'
+          'Can\'t withdraw when the information is wrong, please check the passwords and only Carol can withdraw.'
         );
       });
     });
@@ -160,7 +160,7 @@ contract('Remittance', accounts => {
         assert.strictEqual(await web3.eth.getBalance(remittance.options.address), '0');
       });
 
-      it('should with the ethers to Carol\'s account', async () => {
+      it('should withdraw the ethers to Carol\'s account', async () => {
         // Assert
         const gasPrice = toBN((await web3.eth.getTransaction(tx.transactionHash)).gasPrice);
         const gasFee = toBN(tx.gasUsed).mul(gasPrice);

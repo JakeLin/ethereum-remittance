@@ -25,12 +25,11 @@ contract Remittance is Pausable {
   }
 
   function withdraw(bytes32 _bobPassword, bytes32 _carolPassword) external whenRunning whenAlive {
-    require(msg.sender == carol, "Only Carol can withdraw!");
     uint256 contractBalance = address(this).balance;
     require(contractBalance > 0, "Can't withdraw since the contract balance is zero!");
 
     bytes32 hashValue = generateHash(msg.sender, _bobPassword, _carolPassword);
-    require(hashValue == withdrawHash, "Can't withdraw when the passwords are wrong!");
+    require(hashValue == withdrawHash, "Can't withdraw when the information is wrong, please check the passwords and only Carol can withdraw.");
     emit LogWithdrawn(msg.sender, contractBalance);
     msg.sender.transfer(contractBalance);
   }
