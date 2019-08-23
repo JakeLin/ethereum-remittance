@@ -1,9 +1,9 @@
 pragma solidity >=0.4.21 <0.6.0;
 
 import "./Pausable.sol";
+import "./Ownable.sol";
 
 contract Remittance is Pausable {
-  address public owner;
   address public carol;
   bytes32 private withdrawHash;
 
@@ -13,11 +13,11 @@ contract Remittance is Pausable {
   constructor(bool paused) Pausable(paused) public {
   }
 
-  function calcuateHash(address _carol, bytes32 _bobPassword, bytes32 _carolPassword) public view returns(bytes32) {
+  function generateHash(address _carol, bytes32 _bobPassword, bytes32 _carolPassword) public view returns(bytes32) {
      return keccak256(abi.encodePacked(this, _carol, _bobPassword, _carolPassword));
   }
 
-  function deposit(bytes32 _hash, address _carol) external payable whenRunning whenAlive {
+  function deposit(bytes32 _hash, address _carol) external payable onlyOwner whenRunning whenAlive {
     require(_carol != address(0), "Carol's address must not be zero!");
     require(msg.value > 0, "The value of deposit must be more than zero ether!");
     carol = _carol;
@@ -30,7 +30,7 @@ contract Remittance is Pausable {
     uint256 contractBalance = address(this).balance;
     require(contractBalance > 0, "Can't withdraw since the contract balance is zero!");
 
-    bytes32 hashValue = calcuateHash(msg.sender, _bobPassword, _carolPassword);
+    bytes32 hashValue = generateHash(msg.sender, _bobPassword, _carolPassword);
     require(hashValue == withdrawHash, "Can't withdraw when the passwords are wrong!");
     emit LogWithdrawn(msg.sender, contractBalance);
     msg.sender.transfer(contractBalance);
