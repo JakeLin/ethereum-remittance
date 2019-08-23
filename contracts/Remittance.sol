@@ -1,7 +1,6 @@
 pragma solidity >=0.4.21 <0.6.0;
 
 import "./Pausable.sol";
-import "./Ownable.sol";
 
 contract Remittance is Pausable {
   address public carol;
